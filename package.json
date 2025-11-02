@@ -15,7 +15,7 @@
   "author": "Watchlog",
   "repository": {
     "type": "git",
-    "url": "https://github.com/watchlogserver/rum-vue.git"
+    "url": "https://github.com/Watchlog-monitoring/rum-vue.git"
   },
   "type": "module",
   "main": "./dist/index.cjs",
