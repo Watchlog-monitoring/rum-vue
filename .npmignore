@@ -1,0 +1,7 @@
+src/
+rollup.config.mjs
+README-drafts/
+node_modules/
+.git/
+.vscode/
+.DS_Store

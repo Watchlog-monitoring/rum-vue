@@ -1,0 +1,54 @@
+{
+  "name": "@watchlog/rum-vue",
+  "version": "0.1.0",
+  "description": "Watchlog Real User Monitoring (RUM) for Vue 3 + Vue Router v4",
+  "keywords": [
+    "watchlog",
+    "rum",
+    "monitoring",
+    "vue",
+    "vue-router",
+    "spa",
+    "performance"
+  ],
+  "license": "MIT",
+  "author": "Watchlog",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/watchlogserver/rum-vue.git"
+  },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "vue": "^3.3.0",
+    "vue-router": "^4.2.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.8",
+    "@rollup/plugin-node-resolve": "^15.3.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.52.5",
+    "rollup-plugin-dts": "^6.1.1",
+    "typescript": "^5.6.3"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

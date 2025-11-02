@@ -1,0 +1,30 @@
+# Node & dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+dist/
+coverage/
+*.tgz
+
+# Local env & temp
+.env
+.env.local
+.env.*.local
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+*.log
+
+# Tests & examples
+__tests__/
+example/
+demo/
+
+# System files
+Thumbs.db
