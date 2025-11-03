@@ -1,6 +1,6 @@
 {
   "name": "@watchlog/rum-vue",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Watchlog Real User Monitoring (RUM) for Vue 3 + Vue Router v4",
   "keywords": [
     "watchlog",
