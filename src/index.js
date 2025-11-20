@@ -583,9 +583,13 @@ async function installWebVitals() {
         normalizedPath: meta.normalizedPath,
       })
     }
-    onCLS(wrap('CLS'))
+    // CLS: Cumulative Layout Shift - may take time to collect
+    onCLS(wrap('CLS'), { reportAllChanges: true })
+    // LCP: Largest Contentful Paint
     onLCP(wrap('LCP'))
-    onINP(wrap('INP'))
+    // INP: Interaction to Next Paint - requires user interaction
+    onINP(wrap('INP'), { reportAllChanges: true })
+    // TTFB: Time to First Byte
     onTTFB(wrap('TTFB'))
     // FID is deprecated but still useful
     if (onFID) onFID(wrap('FID'))
@@ -943,10 +947,18 @@ function registerListeners(config) {
     return false
   }
 
-  // session sampling
-  _sessionDropped = (typeof sampleRate === 'number' && sampleRate >= 0 && sampleRate <= 1)
-    ? (Math.random() > sampleRate)
-    : false
+  // session sampling with maximum limit to prevent server overload
+  // Maximum allowed sample rate is 0.5 (50%) to protect server resources
+  const MAX_SAMPLE_RATE = 0.5
+  const effectiveSampleRate = (typeof sampleRate === 'number' && sampleRate >= 0 && sampleRate <= 1)
+    ? Math.min(sampleRate, MAX_SAMPLE_RATE)
+    : MAX_SAMPLE_RATE
+  
+  if (sampleRate > MAX_SAMPLE_RATE && WatchlogRUM.debug) {
+    console.warn(`[Watchlog RUM] sampleRate (${sampleRate}) exceeds maximum allowed (${MAX_SAMPLE_RATE}). Using ${MAX_SAMPLE_RATE} instead.`)
+  }
+  
+  _sessionDropped = Math.random() > effectiveSampleRate
 
   let deviceId = null
   try {

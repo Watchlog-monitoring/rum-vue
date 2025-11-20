@@ -87,9 +87,9 @@ app.use(createWatchlogRUMPlugin({
   release: '1.0.0', // optional
   debug: false,
   flushInterval: 10000, // ms
-  sampleRate: 1.0, // 0.0 to 1.0 - session sampling
-  networkSampleRate: 0.1, // 0.0 to 1.0 - network request sampling
-  interactionSampleRate: 0.1, // 0.0 to 1.0 - user interaction sampling
+  sampleRate: 0.5, // 0.0 to 1.0 - session sampling (max: 0.5 to prevent server overload)
+  networkSampleRate: 0.1, // 0.0 to 1.0 - network request sampling (recommended: 0.1)
+  interactionSampleRate: 0.1, // 0.0 to 1.0 - user interaction sampling (recommended: 0.1)
   enableWebVitals: true,
   captureLongTasks: true,
   captureFetch: true,
@@ -185,6 +185,31 @@ WatchlogRUM.flush(true)
 
 ---
 
+## ⚠️ Sample Rate Limits & Best Practices
+
+### Session Sample Rate (`sampleRate`)
+To protect server resources and prevent overload, the maximum allowed `sampleRate` is **0.5 (50%)**. If you set a value higher than 0.5, it will be automatically capped to 0.5.
+
+**Recommended values:**
+- **Development/Testing**: `0.5` (50%) - Full visibility for debugging
+- **Production (Low Traffic)**: `0.3` (30%) - Good balance between data and performance
+- **Production (High Traffic)**: `0.1` (10%) - Efficient data collection without server strain
+
+**Why limit sample rate?**
+High sample rates can generate massive amounts of data, leading to:
+- Server overload and potential crashes
+- Increased storage costs
+- Slower query performance
+- Network bandwidth issues
+
+### Network Sample Rate (`networkSampleRate`)
+Network requests can be very frequent. We recommend keeping this at **0.1 (10%)** or lower for production environments.
+
+### Interaction Sample Rate (`interactionSampleRate`)
+User interactions (clicks, scrolls) can be extremely frequent. We recommend **0.1 (10%)** or lower for production.
+
+---
+
 ## 📦 Configuration Options
 
 | Option | Type | Default | Description |
@@ -196,9 +221,9 @@ WatchlogRUM.flush(true)
 | `release` | `string` | `null` | Release version (e.g., '1.0.0') |
 | `debug` | `boolean` | `false` | Enable debug logging |
 | `flushInterval` | `number` | `10000` | Flush interval in milliseconds |
-| `sampleRate` | `number` | `1.0` | Session sampling rate (0.0 to 1.0) |
-| `networkSampleRate` | `number` | `0.1` | Network request sampling rate (0.0 to 1.0) |
-| `interactionSampleRate` | `number` | `0.1` | User interaction sampling rate (0.0 to 1.0) |
+| `sampleRate` | `number` | `1.0` | Session sampling rate (0.0 to 1.0). **Note:** Maximum allowed value is 0.5 (50%) to prevent server overload. Values above 0.5 will be automatically capped. |
+| `networkSampleRate` | `number` | `0.1` | Network request sampling rate (0.0 to 1.0). Recommended: 0.1 (10%) for production. |
+| `interactionSampleRate` | `number` | `0.1` | User interaction sampling rate (0.0 to 1.0). Recommended: 0.1 (10%) for production. |
 | `enableWebVitals` | `boolean` | `true` | Enable Web Vitals tracking (requires web-vitals package) |
 | `autoTrackInitialView` | `boolean` | `true` | Automatically track initial page view |
 | `captureLongTasks` | `boolean` | `true` | Capture long tasks (>50ms) |
