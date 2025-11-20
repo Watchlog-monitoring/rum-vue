@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/Watchlog-monitoring/rum-vue/compare/1.0.0...1.1.0) (2025-11-20)
+
+
+### Features
+
+* add network features ([2f117ef](https://github.com/Watchlog-monitoring/rum-vue/commit/2f117efdc2b675d8077a8eb6410ee7a05204feb9))
+* update events and CLC & INP ([067eca1](https://github.com/Watchlog-monitoring/rum-vue/commit/067eca192a732c6694dbbabf29934d558ca8e51f))
+
 # Changelog
 
 ## 0.3.0 (2025-01-XX)
