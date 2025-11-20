@@ -4,7 +4,7 @@ import terser from '@rollup/plugin-terser'   // ✅ default import
 // اگر فعلاً d.ts نداری، این خط رو حذف کن:
 // import dts from 'rollup-plugin-dts'
 
-const external = ['vue', 'vue-router']
+const external = ['vue', 'vue-router', 'web-vitals']
 
 export default [
   // JS builds: ESM + CJS
@@ -12,8 +12,19 @@ export default [
     input: 'src/index.js',
     external,
     output: [
-      { file: 'dist/index.mjs', format: 'esm', sourcemap: true },
-      { file: 'dist/index.cjs', format: 'cjs', sourcemap: true, exports: 'named' }
+      { 
+        file: 'dist/index.mjs', 
+        format: 'esm', 
+        sourcemap: true,
+        inlineDynamicImports: true 
+      },
+      { 
+        file: 'dist/index.cjs', 
+        format: 'cjs', 
+        sourcemap: true, 
+        exports: 'named',
+        inlineDynamicImports: true 
+      }
     ],
     plugins: [
       resolve({ browser: true }),
